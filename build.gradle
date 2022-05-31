@@ -1,0 +1,38 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.7'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+//프로젝트 메타 데이터
+group = 'com.sparta' // 배포하는데 사용된다.
+version = '0.0.1-SNAPSHOT' // 버전
+sourceCompatibility = '1.8' //
+
+// configuration 부분에서 annotationProcessor를 컴파일 당시 사용하라고 그래들에게 알려준다.
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+//그래들이 라이브러리를 다운 받을 댸 메이븐 센트럴에서 다운받는다는는것을 알려주는 것
+repositories {
+    mavenCentral()
+}
+
+// 디펜던시에서 사용할 라이브러리를 명시하면  그래들이 레포지토리에서 사용 할 라이브러리를 다운 및 설치한다.
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'mysql:mysql-connector-java'
+    annotationProcessor 'org.projectlombok:lombok' // 롬복이 코드를 작성할 수 있도록 도와주는 annotationProcessor
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+//
+tasks.named('test') {
+    useJUnitPlatform()
+}
